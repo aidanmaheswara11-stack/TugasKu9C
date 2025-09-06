@@ -1,0 +1,246 @@
+<SKIPPED_HTML_EDIT_MODE></SKIPPED_HTML_EDIT_MODE>
+<think>
+First, the user said: "make the base orange adn fun looking". It seems like a typo for "make the base orange and fun looking".
+
+
+## Interpreting user request  
+- The user asked to "make the base orange adn fun looking," likely a typo for "orange and fun looking."  
+- The goal seems to be updating a design, possibly an HTML file, to feature an orange color scheme and a playful aesthetic.  
+
+## Planning modifications  
+- Need to adjust the HTML file to incorporate an orange color scheme.
+</think>`index.html`
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUGASKU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff5722, #ff9800, #ffc107);
+            min-height: 100vh;
+            animation: bounceIn 1s ease-in-out;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .task-card {
+            transition: transform 0.3s, box-shadow 0.3s, rotate 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #fff3e0;
+        }
+        .task-card:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .priority-high { border-left: 5px solid #e65100; }
+        .priority-medium { border-left: 5px solid #fb8c00; }
+        .priority-low { border-left: 5px solid #ffb74d; }
+        .completed-task { text-decoration: line-through; opacity: 0.6; transform: rotate(-2deg); }
+        .reminder-badge {
+            background: #ff6f00;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .awesome-hero {
+            background: linear-gradient(135deg, #ffab91, #ff8a65);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .fun-button {
+            animation: wiggle 2s infinite;
+        }
+        @keyframes wiggle {
+            0%, 7% { transform: rotateZ(0); }
+            15% { transform: rotateZ(-15deg); }
+            20% { transform: rotateZ(10deg); }
+            25% { transform: rotateZ(-10deg); }
+            30% { transform: rotateZ(6deg); }
+            35% { transform: rotateZ(-4deg); }
+            40%, 100% { transform: rotateZ(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-4xl mx-auto p-6">
+        <div class="awesome-hero">
+            <h1 class="text-5xl font-bold mb-2 animate-bounce">TUGASKU</h1>
+            <p class="text-xl">Kelola tugas studi dengan sentuhan cerita yang seru dan pengingat cerdas!</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-xl mb-6" style="background: linear-gradient(135deg, #fff8e1, #fff3e0);">
+            <h2 class="text-3xl font-bold mb-4 text-orange-800">Tambah Tugas Baru</h2>
+            <form id="taskForm" class="space-y-4">
+                <input type="text" id="taskTitle" placeholder="Judul Tugas (contoh: Selesaikan PR Matematika)" class="w-full p-4 border-2 border-orange-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-orange-400 bg-white text-gray-800" required>
+                <textarea id="taskDesc" placeholder="Deskripsi Tugas (contoh: Soal Bab 5 nomor 1-20)" class="w-full p-4 border-2 border-orange-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-orange-400 bg-white text-gray-800 h-24 resize-none"></textarea>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <select id="taskPriority" class="p-4 border-2 border-orange-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-orange-400">
+                        <option value="low">Prioritas Rendah</option>
+                        <option value="medium" selected>Prioritas Sedang</option>
+                        <option value="high">Prioritas Tinggi</option>
+                    </select>
+                    <input type="datetime-local" id="taskDueDate" class="p-4 border-2 border-orange-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-orange-400 bg-white">
+                    <input type="datetime-local" id="taskReminder" placeholder="Atur Pengingat (opsional)" class="p-4 border-2 border-orange-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-orange-400 bg-white">
+                </div>
+                <button type="submit" class="bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition duration-300 shadow-lg fun-button">Tambah Tugas</button>
+            </form>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-xl" style="background: linear-gradient(135deg, #fff8e1, #fff3e0);">
+            <h2 class="text-3xl font-bold mb-4 text-orange-800">Daftar Tugasku (<span id="taskCount">0</span>)</h2>
+            <div id="taskList" class="space-y-4">
+                <!-- Tugas akan ditambahkan secara dinamis di sini -->
+            </div>
+            <div id="noTasks" class="text-center text-orange-600 py-8 text-lg font-semibold">
+                <p>Belum ada tugas. Tambahkan satu di atas untuk memulai petualangan studi!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kunci Local Storage
+        const TASKS_KEY = 'studentTasks';
+
+        // Elemen
+        const taskForm = document.getElementById('taskForm');
+        const taskList = document.getElementById('taskList');
+        const noTasks = document.getElementById('noTasks');
+        const taskCount = document.getElementById('taskCount');
+
+        // Muat tugas dari localStorage
+        let tasks = JSON.parse(localStorage.getItem(TASKS_KEY)) || [];
+
+        // Fungsi untuk merender tugas
+        function renderTasks() {
+            taskList.innerHTML = '';
+            if (tasks.length === 0) {
+                noTasks.style.display = 'block';
+            } else {
+                noTasks.style.display = 'none';
+            }
+            tasks.forEach((task, index) => {
+                const taskCard = document.createElement('div');
+                taskCard.className = `task-card p-4 rounded-xl bg-yellow-50 border priority-${task.priority}`;
+                if (task.completed) taskCard.classList.add('completed-task');
+
+                const dueText = task.dueDate ? new Date(task.dueDate).toLocaleString('id-ID') : 'Tidak ada tanggal jatuh tempo';
+                const reminderBadge = task.reminder ? `<span class="reminder-badge ml-2">Pengingat Ditetapkan</span>` : '';
+
+                taskCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-xl text-orange-900">${task.title}</h3>
+                        <div>
+                            <button onclick="editTask(${index})" class="text-blue-600 hover:text-blue-800 mr-2 font-bold">Edit</button>
+                            <button onclick="deleteTask(${index})" class="text-red-600 hover:text-red-800 font-bold">Hapus</button>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-2 font-medium">${task.description || 'Tidak ada deskripsi'}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-600 font-semibold">Jatuh Tempo: ${dueText} ${reminderBadge}</span>
+                        <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleComplete(${index})" class="w-6 h-6 text-green-600 bg-gray-100 border-orange-300 rounded focus:ring-orange-500">
+                    </div>
+                `;
+                taskList.appendChild(taskCard);
+            });
+            taskCount.textContent = tasks.length;
+            checkReminders();
+        }
+
+        // Fungsi untuk menambah/edit tugas
+        taskForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const index = parseInt(taskForm.dataset.editIndex) || -1;
+            const task = {
+                title: document.getElementById('taskTitle').value,
+                description: document.getElementById('taskDesc').value,
+                priority: document.getElementById('taskPriority').value,
+                dueDate: document.getElementById('taskDueDate').value,
+                reminder: document.getElementById('taskReminder').value,
+                completed: index >= 0 ? tasks[index].completed : false
+            };
+            if (index >= 0) {
+                tasks[index] = task;
+                delete taskForm.dataset.editIndex;
+            } else {
+                tasks.push(task);
+            }
+            saveTasks();
+            renderTasks();
+            taskForm.reset();
+        });
+
+        // Fungsi untuk edit tugas
+        function editTask(index) {
+            const task = tasks[index];
+            document.getElementById('taskTitle').value = task.title;
+            document.getElementById('taskDesc').value = task.description;
+            document.getElementById('taskPriority').value = task.priority;
+            document.getElementById('taskDueDate').value = task.dueDate;
+            document.getElementById('taskReminder').value = task.reminder;
+            taskForm.dataset.editIndex = index;
+            taskForm.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fungsi untuk hapus tugas
+        function deleteTask(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+                tasks.splice(index, 1);
+                saveTasks();
+                renderTasks();
+            }
+        }
+
+        // Fungsi untuk toggle selesai
+        function toggleComplete(index) {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            renderTasks();
+        }
+
+        // Fungsi untuk simpan ke localStorage
+        function saveTasks() {
+            localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+        }
+
+        // Fungsi untuk cek pengingat
+        function checkReminders() {
+            const now = new Date();
+            tasks.forEach(task => {
+                if (task.reminder && !task.completed) {
+                    const reminderTime = new Date(task.reminder);
+                    if (reminderTime <= now && reminderTime >= new Date(now.getTime() - 60000)) {
+                        alert(`Pengingat: ${task.title}`);
+                    }
+                }
+            });
+        }
+
+        // Render awal dan cek pengingat
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTasks();
+            setInterval(checkReminders, 60000);
+        });
+    </script>
+</body>
+</html>
+</content>
+</create_file>
+```
